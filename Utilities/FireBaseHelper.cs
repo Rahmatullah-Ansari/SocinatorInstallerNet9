@@ -3,7 +3,6 @@ using FirebaseAdmin;
 using FireSharp;
 using FireSharp.Interfaces;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Storage.v1;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using SocinatorInstaller.Enums;
@@ -21,7 +20,6 @@ namespace SocinatorInstaller.Utilities
     public class FireBaseHelper
     {
         private static FireBaseHelper instance;
-        private readonly StorageService storageService;
         public static FireBaseHelper GetInstance => instance ?? (instance = new FireBaseHelper());
         public FireBaseHelper()
         {
