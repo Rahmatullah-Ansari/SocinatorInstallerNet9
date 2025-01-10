@@ -15,7 +15,7 @@ namespace SocinatorInstaller
         public MainWindow()
         {
             InitializeComponent();
-            if (IsAdministrator())
+            if (!IsAdministrator())
             {
                 var startInfo = new ProcessStartInfo
                 {
