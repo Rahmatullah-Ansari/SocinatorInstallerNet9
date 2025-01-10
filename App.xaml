@@ -1,0 +1,17 @@
+﻿<Application
+    x:Class="SocinatorInstaller9.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:SocinatorInstaller9"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="ZillaSlabSemiBold">pack://application:,,,/Fonts/ZillaSlabSemiBold.ttf#Zilla Slab SemiBold</FontFamily>
+            <FontFamily x:Key="RubikBold">pack://application:,,,/Rubik/Rubik-Bold.ttf#Rubik</FontFamily>
+            <FontFamily x:Key="RubikLight">pack://application:,,,/Rubik/Rubik-Light.ttf#Rubik</FontFamily>
+            <FontFamily x:Key="RubikRegular">pack://application:,,,/Rubik/Rubik-Regular.ttf#Rubik</FontFamily>
+            <FontFamily x:Key="RubikMedium">pack://application:,,,/Rubik/Rubik-Medium.ttf#Rubik</FontFamily>
+            <FontFamily x:Key="RubikSemiBold">pack://application:,,,/Rubik/Rubik-SemiBold.ttf#Rubik</FontFamily>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
