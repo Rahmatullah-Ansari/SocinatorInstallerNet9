@@ -25,7 +25,7 @@ namespace SocinatorInstaller.ViewModels
             get => _model;
             set => SetProperty(ref _model, value);
         }
-        private string _note = $"Note * Select Project Archive File With Format FileName_version.zip (ex- {Constants.ApplicationName}_x.x.x.x.zip)";
+        private string _note = $"Note * Select Project Archive File With Format FileName_version.zip (ex- {Constants.ApplicationName}_x.x.x.zip)";
         //private string _note = $"Note * Select Project Build Output Path To Build Setup (ex. ...dominatorhouse-social\\DominatorHouse\\bin\\Release)";
         public string Note
         {
