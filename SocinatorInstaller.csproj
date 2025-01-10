@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <PublishSingleFile>true</PublishSingleFile>
     <UseFody>true</UseFody>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <ApplicationIcon>SocinatorSmall.ico</ApplicationIcon>
   </PropertyGroup>
