@@ -8,7 +8,7 @@ namespace SocinatorInstaller.Utilities
         #region API Server Links
         public static double UIOpacityEnable = 1;
         public static double UIOpacityDisable = 0.6;
-        public static bool DeveloperMode = true;
+        public static bool DeveloperMode = false;
         public static string IconFileName => "SocinatorSmall.ico";
         public static string ShortCutDescription => "Social Dominator";
         public static string GetLocalFolder => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
