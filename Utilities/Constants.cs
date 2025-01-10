@@ -8,7 +8,7 @@ namespace SocinatorInstaller.Utilities
         #region API Server Links
         public static double UIOpacityEnable = 1;
         public static double UIOpacityDisable = 0.6;
-        public static bool DeveloperMode = false;
+        public static bool DeveloperMode = true;
         public static string IconFileName => "SocinatorSmall.ico";
         public static string ShortCutDescription => "Social Dominator";
         public static string GetLocalFolder => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -19,7 +19,7 @@ namespace SocinatorInstaller.Utilities
         public static string InstallerFolder => $"{GetLocalFolder}\\{ApplicationName}Installer";
         public static string ConfirmationMessageForClosing { get; set; } = $"{ApplicationName} is running Do you want to close before uninstalling ?";
         public static string GetDefaultIntallationPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-        public static string GetInstallerExe => System.Reflection.Assembly.GetEntryAssembly().Location;
+        public static string GetInstallerExe => (System.Reflection.Assembly.GetEntryAssembly().Location)?.Replace(".dll",".exe");
         //For DevelopeMentAPI
         public static Uri uri { get; set; } = new Uri(@"https://storage.googleapis.com/powerbrowser-bulids/Power-dev/power-dev-bulids/Power%20Browser%20Dev%20Installer.exe");
         //For LiveAPI
