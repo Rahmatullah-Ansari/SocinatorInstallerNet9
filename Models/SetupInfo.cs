@@ -1,8 +1,8 @@
-﻿using SocinatorInstaller9.Enums;
-using SocinatorInstaller9.Utilities;
+﻿using SocinatorInstaller.Enums;
+using SocinatorInstaller.Utilities;
 
 
-namespace SocinatorInstaller9.Models
+namespace SocinatorInstaller.Models
 {
     public class SetupInfo : BindableBase
     {

@@ -1,4 +1,4 @@
-﻿namespace SocinatorInstaller9.Responses
+﻿namespace SocinatorInstaller.Responses
 {
     public class UploadResponseHandler
     {

@@ -1,10 +1,10 @@
-﻿using SocinatorInstaller9.Utilities;
+﻿using SocinatorInstaller.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
-namespace SocinatorInstaller9.Views
+namespace SocinatorInstaller.Views
 {
     /// <summary>
     /// Interaction logic for DiskSelectionDialog.xaml

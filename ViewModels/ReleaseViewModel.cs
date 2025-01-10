@@ -1,4 +1,4 @@
-﻿namespace SocinatorInstaller9.ViewModels
+﻿namespace SocinatorInstaller.ViewModels
 {
     public class ReleaseViewModel
     {

@@ -1,7 +1,7 @@
-﻿using SocinatorInstaller9.ViewModels;
+﻿using SocinatorInstaller.ViewModels;
 using System.Windows.Controls;
 
-namespace SocinatorInstaller9.Views
+namespace SocinatorInstaller.Views
 {
     /// <summary>
     /// Interaction logic for DeveloperUI.xaml

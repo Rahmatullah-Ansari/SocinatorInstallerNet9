@@ -1,11 +1,11 @@
-﻿using SocinatorInstaller9.Views;
-using SocinatorInstaller9.Models;
-using SocinatorInstaller9.Utilities;
+﻿using SocinatorInstaller.Views;
+using SocinatorInstaller.Models;
+using SocinatorInstaller.Utilities;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Input;
 
-namespace SocinatorInstaller9.ViewModels
+namespace SocinatorInstaller.ViewModels
 {
     public class DevelopmentViewModel : BindableBase
     {

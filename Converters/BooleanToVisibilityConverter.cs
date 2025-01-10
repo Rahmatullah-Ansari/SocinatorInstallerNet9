@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace SocinatorInstaller9.Converters
+namespace SocinatorInstaller.Converters
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

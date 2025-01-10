@@ -1,8 +1,8 @@
-﻿using SocinatorInstaller9.Views;
+﻿using SocinatorInstaller.Views;
 using System.Windows;
 using System.Windows.Media;
 
-namespace SocinatorInstaller9.Utilities
+namespace SocinatorInstaller.Utilities
 {
     public class DialogUtility
     {

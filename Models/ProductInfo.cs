@@ -1,7 +1,7 @@
-﻿using SocinatorInstaller9.Utilities;
+﻿using SocinatorInstaller.Utilities;
 using System.IO;
 
-namespace SocinatorInstaller9.Models
+namespace SocinatorInstaller.Models
 {
     public class ProductInfo
     {

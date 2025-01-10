@@ -1,4 +1,4 @@
-﻿namespace SocinatorInstaller9.Models
+﻿namespace SocinatorInstaller.Models
 {
     public class SocialDominatorModel
     {

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace SocinatorInstaller9
+namespace SocinatorInstaller
 {
     /// <summary>
     /// Interaction logic for App.xaml

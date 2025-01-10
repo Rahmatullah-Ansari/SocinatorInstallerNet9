@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SocinatorInstaller9.Utilities
+namespace SocinatorInstaller.Utilities
 {
     [Serializable]
     public class BindableBase : INotifyPropertyChanged

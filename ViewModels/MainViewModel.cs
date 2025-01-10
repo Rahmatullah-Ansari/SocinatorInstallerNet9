@@ -1,15 +1,13 @@
-﻿using SocinatorInstaller9.Utilities;
-using SocinatorInstaller9.Views;
-using System;
+﻿using SocinatorInstaller.Utilities;
+using SocinatorInstaller.Views;
 using System.Windows.Controls;
 
-namespace SocinatorInstaller9.ViewModels
+namespace SocinatorInstaller.ViewModels
 {
     public class MainViewModel : BindableBase
     {
         private static MainViewModel instance;
         private UserControl _usercontrol = new UserControl();
-        private int Mode = 0;
         public UserControl SelectedUserControl
         {
             get => _usercontrol;
@@ -25,10 +23,7 @@ namespace SocinatorInstaller9.ViewModels
         {
             try
             {
-                //#if DEBUG
-                //                Mode = 1;
-                //#endif
-                SelectedUserControl = (Mode == 0 ? ReleaseUI.GetInstance : DeveloperUI.Instance);
+                SelectedUserControl = (Constants.DeveloperMode ? DeveloperUI.Instance: ReleaseUI.GetInstance);
             }
             catch (Exception) { SelectedUserControl = ReleaseUI.GetInstance; }
         }

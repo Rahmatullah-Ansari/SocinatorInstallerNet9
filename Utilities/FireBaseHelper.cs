@@ -6,9 +6,9 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Storage.v1;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
-using SocinatorInstaller9.Enums;
-using SocinatorInstaller9.Models;
-using SocinatorInstaller9.Responses;
+using SocinatorInstaller.Enums;
+using SocinatorInstaller.Models;
+using SocinatorInstaller.Responses;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -16,7 +16,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Controls;
 
-namespace SocinatorInstaller9.Utilities
+namespace SocinatorInstaller.Utilities
 {
     public class FireBaseHelper
     {

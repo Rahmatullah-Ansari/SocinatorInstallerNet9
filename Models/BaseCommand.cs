@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace SocinatorInstaller9.Models
+namespace SocinatorInstaller.Models
 {
     public class BaseCommand<T> : ICommand
     {

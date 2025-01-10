@@ -1,4 +1,4 @@
-﻿namespace SocinatorInstaller9.Utilities
+﻿namespace SocinatorInstaller.Utilities
 {
     public class InstalledInfo
     {

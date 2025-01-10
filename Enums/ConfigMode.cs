@@ -1,4 +1,4 @@
-﻿namespace SocinatorInstaller9.Enums
+﻿namespace SocinatorInstaller.Enums
 {
     public enum ConfigMode
     {

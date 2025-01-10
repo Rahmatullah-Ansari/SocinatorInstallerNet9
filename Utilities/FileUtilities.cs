@@ -1,11 +1,11 @@
 ﻿using FireSharp.Config;
 using FireSharp.Interfaces;
 using Newtonsoft.Json;
-using SocinatorInstaller9.Models;
+using SocinatorInstaller.Models;
 using System.IO;
 using System.Reflection;
 
-namespace SocinatorInstaller9.Utilities
+namespace SocinatorInstaller.Utilities
 {
     public class FileUtilities
     {
@@ -29,7 +29,7 @@ namespace SocinatorInstaller9.Utilities
         {
             try
             {
-                return JsonConvert.DeserializeObject<FireBaseAuthCred>(ReadResource($"SocialDominatorInstaller.FireBaseConfigGLB.json"));
+                return JsonConvert.DeserializeObject<FireBaseAuthCred>(ReadResource($"SocinatorInstaller.FireBaseConfigGLB.json"));
             }
             catch { return new FireBaseAuthCred(); }
         }
@@ -67,7 +67,7 @@ namespace SocinatorInstaller9.Utilities
             var json = string.Empty;
             try
             {
-                json = ReadResource($"SocialDominatorInstaller.ServiceAccountGLB.json");
+                json = ReadResource($"SocinatorInstaller.ServiceAccountGLB.json");
             }
             catch { }
             return json;
@@ -143,7 +143,7 @@ namespace SocinatorInstaller9.Utilities
         {
             try
             {
-                using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SocialDominatorInstaller.UnInstaller.exe"))
+                using (var resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SocinatorInstaller.UnInstaller.exe"))
                 {
                     if (resourceStream != null)
                     {

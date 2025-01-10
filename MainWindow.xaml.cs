@@ -1,10 +1,10 @@
-﻿using SocinatorInstaller9.Utilities;
-using SocinatorInstaller9.ViewModels;
+﻿using SocinatorInstaller.Utilities;
+using SocinatorInstaller.ViewModels;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Windows;
 
-namespace SocinatorInstaller9
+namespace SocinatorInstaller
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -15,7 +15,7 @@ namespace SocinatorInstaller9
         public MainWindow()
         {
             InitializeComponent();
-            if (!IsAdministrator())
+            if (IsAdministrator())
             {
                 var startInfo = new ProcessStartInfo
                 {

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SocinatorInstaller9.Utilities
+namespace SocinatorInstaller.Utilities
 {
     public class DirectoryUtility
     {

@@ -1,7 +1,8 @@
-﻿using Microsoft.Win32;
-using SocinatorInstaller9.Enums;
-using SocinatorInstaller9.Models;
-using SocinatorInstaller9.Utilities;
+﻿//using IWshRuntimeLibrary;
+using Microsoft.Win32;
+using SocinatorInstaller.Enums;
+using SocinatorInstaller.Models;
+using SocinatorInstaller.Utilities;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
@@ -9,14 +10,12 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WindowsShortcutFactory;
 
-namespace SocinatorInstaller9.Views
+namespace SocinatorInstaller.Views
 {
     /// <summary>
     /// Interaction logic for ReleaseUI.xaml
@@ -41,11 +40,11 @@ namespace SocinatorInstaller9.Views
             var installedInfo = CheckInstalled(Constants.ApplicationName);
             if (installedInfo.IsInstalled)
             {
-                latestUploadedModel = helper.GetListNodes<Dictionary<string, SocialDominatorModel>>(Constants.GetDownloadNode(ConfigMode.Release)).LastOrDefault().Value as SocialDominatorModel;
+                latestUploadedModel = GetLatestInstalledVersion();
                 InstalledLocation = installedInfo.InstalledLocation;
                 StartGrid.Visibility = Visibility.Collapsed;
                 ButtonGrid.Visibility = Visibility.Collapsed;
-                if (latestUploadedModel != null && new Version(latestUploadedModel.Version).CompareTo(new Version(installedInfo.Version)) > 0)
+                if (latestUploadedModel != null && latestUploadedModel?.Version != null && new Version(latestUploadedModel?.Version).CompareTo(new Version(installedInfo.Version)) > 0)
                 {
                     UpdateBtnBorder.Visibility = Visibility.Visible;
                     VersionInfoTextBlock.Text = $"Installed Version  :  {installedInfo.Version}";
@@ -61,6 +60,16 @@ namespace SocinatorInstaller9.Views
             }
             MainGrid.DataContext = this;
         }
+
+        private SocialDominatorModel? GetLatestInstalledVersion()
+        {
+            try
+            {
+                return helper.GetListNodes<Dictionary<string, SocialDominatorModel>>(Constants.GetDownloadNode(ConfigMode.Release)).LastOrDefault().Value as SocialDominatorModel;
+            }
+            catch { return new SocialDominatorModel(); }
+        }
+
         private bool isCurrentUser = true;
         public static ReleaseUI GetInstance => instance ?? (instance = new ReleaseUI());
         private int NxtButtonCount = 1;
@@ -242,7 +251,7 @@ namespace SocinatorInstaller9.Views
                             installedInfo.InstalledLocation = subkey.GetValue("InstallLocation").ToString();
                             installedInfo.UninstallString = subkey.GetValue("UninstallString").ToString();
 
-                            installedInfo.Version = subkey.GetValue("DisplayVersion").ToString();
+                            installedInfo.Version = GetProductVersion(subkey.GetValue("DisplayVersion").ToString());
                             installedInfo.IsInstalled = true;
                             break;
                         }
@@ -266,7 +275,7 @@ namespace SocinatorInstaller9.Views
                                 installedInfo.InstalledLocation = subkey.GetValue("InstallLocation").ToString();
                                 installedInfo.UninstallString = subkey.GetValue("UninstallString").ToString();
 
-                                installedInfo.Version = subkey.GetValue("DisplayVersion").ToString();
+                                installedInfo.Version = GetProductVersion(subkey.GetValue("DisplayVersion").ToString());
                                 installedInfo.IsInstalled = true;
                                 break;
                             }
@@ -416,19 +425,50 @@ namespace SocinatorInstaller9.Views
             {
                 await Task.Run(() =>
                 {
-                    IShellLink link = (IShellLink)new ShellLink();
-                    // setup shortcut information
-                    link.SetDescription($"Social Dominator");
-                    link.SetPath($"{DefaultPath}\\{Constants.ApplicationName}.exe");
-                    IPersistFile file = (IPersistFile)link;
-                    string desktopPath = Environment.GetFolderPath(!isCurrentUser ? Environment.SpecialFolder.CommonDesktopDirectory : Environment.SpecialFolder.Desktop);
-                    string startmenu = Environment.GetFolderPath(!isCurrentUser ? Environment.SpecialFolder.CommonStartMenu : Environment.SpecialFolder.StartMenu);
-                    file.Save(Path.Combine(desktopPath, $"{Constants.ApplicationName}.lnk"), false);
-                    file.Save(Path.Combine(startmenu, $"{Constants.ApplicationName}.lnk"), false);
+                    try
+                    {
+                        var iconPath = Path.Combine(DefaultPath, Constants.IconFileName);
+                        var targetPath = Path.Combine(DefaultPath,$"{Constants.ApplicationName}.exe");
+                        var desktopPath = Environment.GetFolderPath(!isCurrentUser ? Environment.SpecialFolder.CommonDesktopDirectory : Environment.SpecialFolder.Desktop);
+                        var startmenu = Environment.GetFolderPath(!isCurrentUser ? Environment.SpecialFolder.CommonStartMenu : Environment.SpecialFolder.StartMenu);
+                        SaveShortCut(desktopPath, targetPath, iconPath);
+                        SaveShortCut(startmenu, targetPath, iconPath);
+                    }
+                    catch(Exception e)
+                    {
+                    
+                    }
                 });
             }
             catch { }
         }
+
+        private void SaveShortCut(string shortCutPath, string exePath, string iconPath)
+        {
+            var shortcutName = Path.Combine(shortCutPath, $"{Constants.ApplicationName}.lnk");
+            try
+            {
+                //var wshShell = new WshShell();
+                //var shortcut = (IWshShortcut)wshShell.CreateShortcut(Path.Combine(shortCutPath, $"{Constants.ApplicationName}.lnk"));
+                //shortcut.TargetPath = exePath;
+                //shortcut.WorkingDirectory = Path.GetDirectoryName(exePath);
+                //shortcut.Description = Constants.ShortCutDescription;
+                //shortcut.IconLocation = iconPath;
+                //shortcut.WindowStyle = 1;
+                //shortcut.Save();
+
+                using var shortcut1 = new WindowsShortcut
+                {
+                    Path = exePath,
+                    Description = Constants.ShortCutDescription,
+                    IconLocation = iconPath,
+                    WorkingDirectory = Path.GetDirectoryName(exePath)
+                };
+                shortcut1.Save(shortcutName);
+            }
+            catch { }
+        }
+
         private async Task CreateRegistry()
         {
             await Task.Run(() =>
@@ -454,12 +494,13 @@ namespace SocinatorInstaller9.Views
                             string exe = "\"" + appName.Replace("/", "\\\\") + "\"";
                             var versionInfo = FileVersionInfo.GetVersionInfo(appName);
                             var folderSizeInBytes = FileUtilities.GetDirectorySize($"{DefaultPath}");
+                            var productVersion = GetProductVersion(versionInfo.ProductVersion.ToString());
                             key.SetValue("DisplayName", Constants.ApplicationName);
-                            key.SetValue("version", versionInfo.ProductVersion.ToString());
+                            key.SetValue("version", productVersion);
                             key.SetValue("Publisher", "Globussoft");
                             key.SetValue("EstimatedSize", (int)(folderSizeInBytes/1024), RegistryValueKind.DWord);
                             key.SetValue("DisplayIcon", exe);
-                            key.SetValue("DisplayVersion", versionInfo.ProductVersion.ToString());
+                            key.SetValue("DisplayVersion", productVersion);
                             key.SetValue("Contact", "https://socinator.com/contact-us/");
                             key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
                             key.SetValue("InstallLocation", $"{DefaultPath}");
@@ -483,6 +524,16 @@ namespace SocinatorInstaller9.Views
                     }
                 }
             });
+        }
+
+        private string? GetProductVersion(string version)
+        {
+            try
+            {
+                var ver = version?.Split('+');
+                return ver?.FirstOrDefault();
+            }
+            catch { return version; }
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
@@ -575,7 +626,7 @@ namespace SocinatorInstaller9.Views
             {
                 if ((bool)LaunchCheckBox.IsChecked)
                 {
-                    await Task.Run(() => Process.Start($"{DefaultPath}\\{Constants.ApplicationName}.exe"));
+                    await Task.Run(() => Process.Start(Path.Combine(DefaultPath,$"{Constants.ApplicationName}.exe")));
                 }
             }
             catch { }
@@ -865,7 +916,7 @@ namespace SocinatorInstaller9.Views
         {
             try
             {
-                var RequiredDiskSpaceSize = 717;
+                var RequiredDiskSpaceSize = 200;
                 ReleaseUserControl.Opacity = 0.5;
                 DiskSelectionDialog dialog = new DiskSelectionDialog(RequiredDiskSpaceSize);
                 dialog.Closing += (s, e) =>
@@ -877,15 +928,6 @@ namespace SocinatorInstaller9.Views
                 dialog.Activate();
             }
             catch (Exception ex) { }
-            
-
-            //bool? result = diskDialog.ShowDialog();
-
-            //// Check if the user selected a disk and closed with OK
-            //if (result == true)
-            //{
-            //    string selectedDisk = diskDialog.SelectedDisk;
-            //}
         }
         public bool BrowseFolder()
         {
@@ -916,37 +958,5 @@ namespace SocinatorInstaller9.Views
         {
             BrowseFolder();
         }
-
-       
-    }
-    [ComImport]
-    [Guid("00021401-0000-0000-C000-000000000046")]
-    internal class ShellLink
-    {
-    }
-
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid("000214F9-0000-0000-C000-000000000046")]
-    internal interface IShellLink
-    {
-        void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out IntPtr pfd, int fFlags);
-        void GetIDList(out IntPtr ppidl);
-        void SetIDList(IntPtr pidl);
-        void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
-        void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
-        void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
-        void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
-        void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
-        void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
-        void GetHotkey(out short pwHotkey);
-        void SetHotkey(short wHotkey);
-        void GetShowCmd(out int piShowCmd);
-        void SetShowCmd(int iShowCmd);
-        void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
-        void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
-        void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
-        void Resolve(IntPtr hwnd, int fFlags);
-        void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
     }
 }
