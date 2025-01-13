@@ -473,9 +473,9 @@ namespace SocinatorInstaller.Views
         {
             await Task.Run(() =>
             {
-                var dest = $"{Constants.InstallerFolder}\\{Constants.AssemblyName}.exe";
-                FileUtilities.CopyFiles(Constants.GetInstallerExe, dest);
-                // var dest = Constants.GetInstallerExe;
+                //var dest = $"{Constants.InstallerFolder}\\{Constants.AssemblyName}.exe";
+                //FileUtilities.CopyFiles(Constants.GetInstallerExe, dest);
+                var dest = Constants.GetInstallerExe;
                 using (RegistryKey parent = (!isCurrentUser ? Registry.LocalMachine : Registry.CurrentUser).OpenSubKey(
                              @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", true))
                 {
